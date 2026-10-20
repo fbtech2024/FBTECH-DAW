@@ -1,0 +1,59 @@
+FBTECH DAW PER WINDOWS 11  -  versione 0.1.0 (banco di prova per ASIO e plugin VST3)
+=====================================================================================
+
+COS'E'
+Il primo passo di un programma tuo, NATIVO per Windows, con driver ASIO e plugin VST3. Non e' ancora una DAW completa: e' la base per provare subito le due cose piu' importanti
+(ASIO e VST3). Quando funzionano sul tuo PC, ci costruisco sopra le tracce e il mixer.
+
+COSA FA LA VERSIONE 0.1
+- IMPOSTAZIONI AUDIO E ASIO: scegli il driver (ASIO, WASAPI, DirectSound), la scheda (ad esempio "Yamaha Steinberg USB ASIO"), la frequenza, la dimensione del buffer,
+  i canali d'ingresso e uscita e le tastiere MIDI. Per i driver ASIO c'e' anche il pulsante del pannello di controllo del driver.
+  La finestra principale mostra sempre: driver, scheda, frequenza, buffer e la LATENZA dichiarata dal driver. Le scelte si ricordano.
+- INGRESSO: scegli il canale (mono o coppia stereo), il guadagno (+/-24 dB) e vedi i misuratori (con picco tenuto e avviso di sovraccarico).
+- ASCOLTO: sentire l'ingresso in uscita (passando dai plugin). Usa le CUFFIE.
+- PLUGIN VST3: "Cerca plugin VST3" li trova (di solito in C:\Program Files\Common Files\VST3). 4 posti in serie, dall'alto in basso: ognuno con "Apri" (la finestra del plugin),
+  "Escludi" e "Togli". Va bene sia per EFFETTI (riverbero, compressore, amp...) sia per STRUMENTI (si suonano con la tastiera MIDI collegata).
+  Il programma ricorda i plugin e le loro impostazioni.
+- REGISTRAZIONE: salva l'ingresso "a secco" in WAV 24 bit in Documenti\FBTECH DAW\Registrazioni (con data e ora nel nome).
+- RIPRODUZIONE: riascolta l'ultima registrazione o apre un file WAV / AIFF / FLAC.
+
+COSA NON FA ANCORA (SARA' IL PASSO DOPO)
+Tracce multiple, timeline, mixer con fader e pan, salvataggio dei progetti, esportazione del mix, registrazione con gli effetti, plugin VST2 (non si possono caricare: solo VST3).
+
+COME OTTENERE IL PROGRAMMA (non devi installare nulla: lo costruisce GitHub, gratis)
+1) Hai gia' un account GitHub? Se no, creane uno gratuito su https://github.com
+2) Crea un repository nuovo (privato), ad esempio  fbtech-daw . Non aggiungere README.
+3) PER AVERE ASIO: scarica il kit ASIO di Steinberg e mettilo nella cartella asiosdk (leggi asiosdk/LEGGIMI_ASIO.txt, sono 4 passi). Senza kit il programma si compila lo stesso, ma SENZA ASIO.
+4) Estrai questo zip e carica il CONTENUTO nel repository (trascina le cartelle e i file, compresa la cartella  .github  e la cartella  asiosdk  con il kit dentro). "Commit changes".
+   Se la cartella .github non si carica: "Add file" > "Create new file", nome  .github/workflows/build.yml , incolla il contenuto di build.yml.
+5) Clicca "Actions" > "Compila FBTECH DAW per Windows" > "Run workflow" (se non e' partita da sola).
+6) La prima volta ci vogliono parecchi minuti (scarica e compila JUCE). Alla fine: spunta verde. Apri la compilazione e in fondo scarica  FBTECH-DAW-Windows  (zip): dentro c'e'  FBTECH DAW.exe.
+   Nel registro della compilazione cerca la riga  "kit ASIO trovato -> ASIO INCLUSO"  (se invece c'e' "NON trovato", manca il kit).
+7) SE VEDI UNA X ROSSA: apri il passaggio che e' fallito e mandami le ultime 40 righe (o una foto). E' NORMALE che la prima compilazione abbia qualche errore: non ho potuto compilare
+   questo programma, quindi non so ancora se il compilatore trova qualcosa da correggere. Si sistema in un giro o due.
+
+USO
+- Doppio clic su  FBTECH DAW.exe . Windows potrebbe dire "Windows ha protetto il PC" (il programma non e' firmato): "Ulteriori informazioni" > "Esegui comunque".
+- Non serve installazione. I tuoi dati (impostazioni, elenco plugin) stanno in  %APPDATA%\FBTECH DAW .
+
+PRIMA PROVA CON LA TUA YAMAHA AG03 (10 minuti, mi servono i risultati)
+a) Installa il "Yamaha Steinberg USB Driver" se non l'hai gia' fatto. Chiudi gli altri programmi che usano la scheda.
+b) Apri FBTECH DAW. Se hai messo il kit ASIO, parte gia' con ASIO e la Yamaha. Altrimenti: "Impostazioni audio e ASIO" > tipo di dispositivo > ASIO > Yamaha Steinberg USB ASIO.
+   Imposta frequenza 48000 Hz e il buffer piu' piccolo che non scatta (prova 64, 128, 256). Scrivimi la riga con la latenza che compare sotto i pulsanti.
+c) Parla/suona nel microfono: i misuratori d'ingresso si muovono? Regola il guadagno. Con le CUFFIE accendi "Ascolto": ti senti? Ti sembra in ritardo?
+d) "Cerca plugin VST3": quanti ne trova? Mi dici se ne mancano quelli che usi?
+e) Metti un effetto VST3 nel posto 1, apri la sua finestra, cambia un parametro, accendi l'Ascolto: senti l'effetto? Chiudi e riapri il programma: ricorda il plugin e l'impostazione?
+f) Prova uno STRUMENTO VST3 nel posto 1 con una tastiera MIDI (se ce l'hai): suona? (Nelle impostazioni audio devono essere attive le tastiere MIDI.)
+g) Registra 10 secondi, ferma, "Riproduci": si sente bene? Apri il WAV nel tuo programma preferito: e' pulito?
+Dimmi cosa non va, anche con una foto.
+
+LICENZE (IMPORTANTE)
+- Il programma e' costruito con JUCE: gratuito per uso personale entro una soglia di ricavi; oltre serve una licenza JUCE a pagamento oppure la licenza aperta AGPLv3.
+  Controlla i termini attuali su https://juce.com prima di distribuire il programma ad altri.
+- ASIO (Steinberg): dal 2025 e' disponibile con accordo gratuito o con GPLv3. VST3: dal 2025 e' con licenza MIT.
+- "VST" e' un marchio di Steinberg: se distribuirai il programma, segui le sue regole d'uso del marchio. Questo non e' un parere legale.
+
+NOTE ONESTE
+- Compilato e provato SOLO nella parte di calcolo (misuratori, decibel, tempi: 19 controlli). Il resto (scheda audio, ASIO, plugin) si prova solo sul tuo PC.
+- La ricerca dei plugin carica i plugin dentro il programma: se uno e' difettoso puo' bloccarsi; la volta dopo il programma lo salta da solo.
+- Cambiare un plugin mentre suona puo' fare un piccolo "clic": normale in questa versione.

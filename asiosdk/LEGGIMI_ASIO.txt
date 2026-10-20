@@ -1,0 +1,15 @@
+KIT ASIO DI STEINBERG (per avere ASIO nel programma)
+====================================================
+Il programma ha bisogno dei file del kit "ASIO SDK" di Steinberg per poter parlare con i driver ASIO (come quello della tua Yamaha).
+Il kit e' gratuito. Dal 2025 Steinberg lo offre con due licenze a scelta: accordo proprietario gratuito oppure GPLv3 (software aperto).
+Scaricandolo SCEGLI TU la licenza e ne accetti i termini: per uso solo tuo va bene qualunque; se un giorno distribuirai il programma, ricontrolla i termini.
+
+COSA FARE (una volta sola)
+1) Vai su  https://www.steinberg.net/developers/  e scarica "ASIO SDK" (e' uno zip).
+2) Estrai lo zip. Dentro troverai le cartelle  common , host , driver  (e dei file PDF).
+3) Copia in QUESTA cartella (asiosdk) le cartelle  common  e  host  (tutte e due, con tutto il contenuto).
+   Alla fine devono esserci, ad esempio:   asiosdk/common/iasiodrv.h   e   asiosdk/host/pc/asiolist.h
+4) Carica la cartella asiosdk nel tuo repository GitHub (come gli altri file) e rilancia la compilazione.
+   Nel registro della compilazione deve comparire  "kit ASIO trovato -> ASIO INCLUSO".
+
+Senza questi file la compilazione riesce lo stesso, ma senza ASIO (solo WASAPI e DirectSound).
