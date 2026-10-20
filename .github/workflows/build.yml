@@ -1,0 +1,40 @@
+name: Compila FBTECH DAW per Windows
+on:
+  workflow_dispatch:
+    inputs:
+      juce_ref:
+        description: 'Versione di JUCE (8.0.6 e la verificata)'
+        default: '8.0.6'
+  push:
+    branches: [main]
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prove della parte di calcolo (compilatore MinGW del computer di GitHub)
+        shell: bash
+        run: |
+          g++ -std=c++17 -O2 tests/levels_test.cpp -o levels_test.exe
+          ./levels_test.exe
+      - name: Configura
+        shell: pwsh
+        run: |
+          $ref = "${{ github.event.inputs.juce_ref }}"
+          if ([string]::IsNullOrWhiteSpace($ref)) { $ref = "8.0.6" }
+          cmake -S . -B build -A x64 "-DJUCE_REF=$ref"
+      - name: Compila
+        run: cmake --build build --config Release --parallel
+      - name: Prepara il pacchetto
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist | Out-Null
+          $exe = Get-ChildItem -Recurse build -Filter "FBTECH DAW.exe" | Select-Object -First 1
+          if ($null -eq $exe) { throw "Non trovo FBTECH DAW.exe" }
+          Copy-Item $exe.FullName dist/
+          Copy-Item LEGGIMI.txt dist/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FBTECH-DAW-Windows
+          path: dist
+          if-no-files-found: error
